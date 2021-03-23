@@ -45,6 +45,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DAA0ACC1260A26E700783068 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DAD4C1D826092BFC00C991AE /* Array+Only.swift */,
+				DAD4C1D52609212700C991AE /* Array+Identifiable.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		DAA0ACC2260A26F500783068 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DAD4C1CE2608FCA000C991AE /* Grid.swift */,
+				DAD4C19326089CDB00C991AE /* EmojiMemoryGameView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DAA0ACC3260A26FC00783068 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DAD4C1D226091CFE00C991AE /* GridLayout.swift */,
+				DAD4C1A12608BA2000C991AE /* MemoryGame.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		DAA0ACC4260A270100783068 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				DAD4C1A42608BBB900C991AE /* EmojiMemoryGame.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		DAD4C18526089CDB00C991AE = {
 			isa = PBXGroup;
 			children = (
@@ -64,14 +99,11 @@
 		DAD4C19026089CDB00C991AE /* Memorize */ = {
 			isa = PBXGroup;
 			children = (
-				DAD4C1D826092BFC00C991AE /* Array+Only.swift */,
+				DAA0ACC4260A270100783068 /* ViewModels */,
+				DAA0ACC3260A26FC00783068 /* Models */,
+				DAA0ACC2260A26F500783068 /* Views */,
+				DAA0ACC1260A26E700783068 /* Extensions */,
 				DAD4C19126089CDB00C991AE /* MemorizeApp.swift */,
-				DAD4C1D226091CFE00C991AE /* GridLayout.swift */,
-				DAD4C1CE2608FCA000C991AE /* Grid.swift */,
-				DAD4C1D52609212700C991AE /* Array+Identifiable.swift */,
-				DAD4C19326089CDB00C991AE /* EmojiMemoryGameView.swift */,
-				DAD4C1A42608BBB900C991AE /* EmojiMemoryGame.swift */,
-				DAD4C1A12608BA2000C991AE /* MemoryGame.swift */,
 				DAD4C19526089CDD00C991AE /* Assets.xcassets */,
 				DAD4C19A26089CDD00C991AE /* Info.plist */,
 				DAD4C19726089CDD00C991AE /* Preview Content */,

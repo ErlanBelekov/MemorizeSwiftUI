@@ -11,43 +11,71 @@ struct EmojiMemoryGameView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
     
     var body: some View {
+        VStack {
         Grid(viewModel.cards) { card in
             CardView(card: card).onTapGesture {
-                viewModel.chooseCard(card: card)
+                withAnimation(Animation.linear(duration: 0.7)) {
+                    viewModel.chooseCard(card: card)
+                }
             }
                 .padding()
         }
             .padding()
             .foregroundColor(Color.orange)
+            Button(action: {
+                withAnimation(.easeInOut) {
+                    self.viewModel.resetGame()
+                }
+            }, label: {
+                Text("New Game")
+            })
+        }
     }
 }
 
 
 struct CardView: View {
     // MARK: - Drawing Constants
-    private let cornerRadius: CGFloat = 10.0
-    private let edgeLineWidth: CGFloat = 3.0
-    private let fontScalingFactor: CGFloat = 0.75
+    private let fontScalingFactor: CGFloat = 0.7
     
     // MARK: - UI
     
     var card: MemoryGame<String>.Card
     
+    @State private var animatedBonusRemaining: Double = 0
+    
+    private func startBonusTimeAnimation() {
+        animatedBonusRemaining = card.bonusRemaining
+        withAnimation(.linear(duration: card.bonusTimeRemaining)) {
+            animatedBonusRemaining = 0
+        }
+    }
+    
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
-                if card.isFaceUp {
-                    RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
-                    RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth)
-                    Circle().padding()
+            if card.isFaceUp || !card.isMatched {
+                ZStack {
+                    Group {
+                        if card.isConsumingBonusTime {
+                            Pie(startAngle: Angle.degrees(0 - 90), endAngle: Angle.degrees(-animatedBonusRemaining * 360 - 90), clockwise: true)
+                                .onAppear {
+                                    self.startBonusTimeAnimation()
+                                }
+                        } else {
+                            Pie(startAngle: Angle.degrees(0 - 90), endAngle: Angle.degrees(-card.bonusRemaining * 360 - 90), clockwise: true)
+                                .onAppear {
+                                    self.startBonusTimeAnimation()
+                                }
+                        }
+                    }.padding(5).opacity(0.4)
                     Text(card.content)
-                } else {
-                    if !card.isMatched {
-                        RoundedRectangle(cornerRadius: cornerRadius).fill()
-                    }
+                        .font(Font.system(size: min(geometry.size.width, geometry.size.height) * fontScalingFactor))
+                        .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
+                        .animation(card.isMatched ? Animation.linear(duration: 1).repeatForever(autoreverses: false) : .default)
                 }
+                    .cardify(isFaceUp: card.isFaceUp)
+                    .transition(AnyTransition.scale)
             }
-            .font(Font.system(size: min(geometry.size.width, geometry.size.height) * fontScalingFactor))
         }
     }
     
